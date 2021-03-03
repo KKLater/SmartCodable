@@ -91,7 +91,7 @@ public extension SmartCaseable {
     
 }
 
-extension SmartCaseable {
+public extension SmartCaseable {
     init(from decoder: Decoder) throws {
         guard let value = try Self(rawValue: decoder.singleValueContainer().decode(RawValue.self)) else {
             self = Self.defaultCase
