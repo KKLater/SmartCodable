@@ -79,11 +79,23 @@ public extension Decoder {
     }
 }
 
-protocol CaseIterableDefaultsLast: Decodable & SmartDecodable & CaseIterable & RawRepresentable
-where RawValue: Decodable, AllCases: BidirectionalCollection { }
 
-extension CaseIterableDefaultsLast {
+public protocol SmartCaseable: Decodable & CaseIterable & RawRepresentable where RawValue: Decodable, AllCases: BidirectionalCollection {
+    static var defaultValue: Self { get }
+}
+
+public extension SmartCaseable {
+    static var defaultValue: Self {
+        return Self.allCases.last!
+    }
+    
+}
+
+extension SmartCaseable {
     init(from decoder: Decoder) throws {
-        self = try Self(rawValue: decoder.singleValueContainer().decode(RawValue.self)) ?? Self.allCases.last!
+        guard let value = try Self(rawValue: decoder.singleValueContainer().decode(RawValue.self)) else {
+            self = Self.defaultValue
+            return  }
+        self = value
     }
 }
