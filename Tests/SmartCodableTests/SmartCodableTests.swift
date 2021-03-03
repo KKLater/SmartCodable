@@ -9,14 +9,21 @@ final class SmartCodableTests: XCTestCase {
             var mobile: String
             var isRegister: Bool
             var info: TagInfo
+            var num: Num
         }
         
-        struct TagInfo: Codable, SmartCodable, SnakeCasable {
+        struct TagInfo: Codable,  SmartCodable, SnakeCasable {
             var title: String
             var imageUrl: String
         }
         
-        let json = Data(#"{"name" : "KK", "mobile" : "18888888888", "is_register" : "1", "info" : {"title" : "single", "image_url" : "https://www.baidu.com" }}"#.utf8)
+        
+        enum Num: Int, Codable, SmartCodable {
+            case one = 1
+            case two = 2
+            case unkonwn
+        }
+        let json = Data(#"{ "num" : "3", "name" : "KK", "mobile" : "18888888888", "is_register" : "1", "info" : {"title" : "single", "image_url" : "https://www.baidu.com" }}"#.utf8)
         do {
             let user = try json.decoded() as User
             print(user)

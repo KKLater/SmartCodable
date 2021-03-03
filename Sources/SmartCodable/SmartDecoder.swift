@@ -79,7 +79,7 @@ public extension Decoder {
     }
 }
 
-protocol CaseIterableDefaultsLast: SmartDecodable & CaseIterable & RawRepresentable
+protocol CaseIterableDefaultsLast: Decodable & SmartDecodable & CaseIterable & RawRepresentable
 where RawValue: Decodable, AllCases: BidirectionalCollection { }
 
 extension CaseIterableDefaultsLast {
